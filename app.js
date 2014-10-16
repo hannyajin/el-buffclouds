@@ -15,9 +15,11 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-// connect to the database
+/**
+    Connect to Mongo
+    */
 var mongo = require('mongodb').MongoClient;
-var mongouri = require('private/auth.json').mongo.uri;
+var mongouri = require('./private/auth.json').mongo.uri;
 
 mongo.connect(mongouri, function(err, db) {
     if (err) {
@@ -26,7 +28,16 @@ mongo.connect(mongouri, function(err, db) {
     }
 });
 mongouri = null;
+console.log("Connected to MongoDB");
 
+
+
+
+
+
+/**
+    Init App
+    */
 var app = express();
 
 // view engine setup
@@ -41,6 +52,11 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+/**
+    Configure routes
+    */
+    
 app.use('/', routes);
 app.use('/users', users);
 
