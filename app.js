@@ -1,3 +1,10 @@
+/**
+    Title: Buffclouds app server
+    desc: Elance Work Project
+    author: Christian Talmo @hannyajin jin.fi
+    client: Peter Kildegaard
+    */
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
