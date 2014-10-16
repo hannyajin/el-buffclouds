@@ -15,14 +15,25 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+// connect to the database
+var mongo = require('mongodb').MongoClient;
+var mongouri = require('private/auth.json').mongo.uri;
+
+mongo.connect(mongouri, function(err, db) {
+    if (err) {
+        console.log("Error: unable to connect to database");
+        return;
+    }
+});
+mongouri = null;
+
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/images/favicon.png'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

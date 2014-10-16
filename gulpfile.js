@@ -5,7 +5,8 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     uglify = require('gulp-uglify'),
     addsrc = require('gulp-add-src'),
-    changed = require('gulp-changed');
+    changed = require('gulp-changed'),
+    mincss = require('gulp-minify-css');
 
 gulp.task('less', function(cb) {
   try {
@@ -46,8 +47,9 @@ gulp.task('js', ['vendor-js'], function() {
 
 gulp.task('css', ['less'], function() {
   gulp.src('./public/css/*.css')
-      .pipe(concat(style.css))
-      .pipe(gulp.dest('./public/css'));
+      .pipe(concat('styles.min.css'))
+      .pipe(mincss())
+      .pipe(gulp.dest('./dist/public/css'));
 });
 
 gulp.task('images', function() {
