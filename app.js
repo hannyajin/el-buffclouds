@@ -14,26 +14,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
-/**
-    Connect to Mongo
-    */
-var mongo = require('mongodb').MongoClient;
-var mongouri = require('./private/auth.json').mongo.uri;
-
-mongo.connect(mongouri, function(err, db) {
-    if (err) {
-        console.log("Error: unable to connect to database");
-        return;
-    }
-});
-mongouri = null;
-console.log("Connected to MongoDB");
-
-
-
-
-
+var db = require('./routes/db');
 
 /**
     Init App
@@ -59,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
     
 app.use('/', routes);
 app.use('/users', users);
+app.use('/api', db.router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
