@@ -31,13 +31,15 @@ passport.use(new LocalStrategy(function(username, password, done) {
 
 // configure seralization & deserialization
 passport.serializeUser(function(user, done) {
-  done(null, user._id);
+  return done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-  if (id === 'blinkID') {
-    done(null, test_user);
+  if (id === 'blinkyID') {
+    return done(null, test_user);
   }
+
+  return done(null, null);
 });
 
 

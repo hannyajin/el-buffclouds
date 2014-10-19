@@ -127,7 +127,8 @@ var models = {
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-  res.send('respond with a resource');
+  console.log('in api get');
+  res.send('user: ' + req.user);
 });
 
 
