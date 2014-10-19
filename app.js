@@ -12,9 +12,19 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var flash = require('connect-flash'); // auth msgs (wrong user/pass etc)
+var session = require('express-session');
+
+
+// configure database
+var db = require('./db');
+// configure passport (authentication)
+var passport = require('./passport');
+
+
+// Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var db = require('./routes/db');
 
 /**
     Init App
@@ -25,11 +35,24 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
 
+//
 app.use(favicon(__dirname + '/public/images/favicon.png'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+
+// cookies & session
+app.use(cookieParser('buffclouds'));
+app.use(session({ cookie: { maxAge: 60000 }, secret: 'buffclouds secret' }));
+
+// connect-flash
+app.use(flash());
+
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// 
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 

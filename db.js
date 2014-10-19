@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* Connect to Mongo DataBase */
 var mongoose = require('mongoose');
-var mongouri = require('../private/auth.json').mongo.uri;  // secret from private file
+var mongouri = require('./private/auth.json').mongo.uri;  // secret from private file
 
 var mongo_opts = { keepAlive: 1 };
 var db = mongoose.createConnection(mongouri, mongo_opts);
@@ -135,5 +135,6 @@ router.get('/', function(req, res) {
 module.exports = {
   type: 'Mongo',
   router: router,
-  models: models
+  models: models,
+  connection: db 
 }
