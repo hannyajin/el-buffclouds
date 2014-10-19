@@ -57,6 +57,7 @@ var linkSchema = new Schema({
   cloud: { type: ObjectId, ref: 'Cloud' },
 
   title: String,
+  desc: String, // max 100
   pictures: [String], // picture urls
   img_index: { type: Number, default: 0 }, // default first linked picture
   tags: [String],
