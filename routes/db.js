@@ -89,6 +89,8 @@ var settingsSchema = new Schema({
   updates: [Date] // list of update times
 });
 
+
+// Not in production
 var personalMessageSchema = new Schema({
   _id: { type: ObjectId, auto: true },
   from: { type: ObjectId, ref: 'User' },
@@ -96,6 +98,16 @@ var personalMessageSchema = new Schema({
 
   title: String,
   text: String,
+
+  date: { type: Date, default: Date.now }
+});
+
+// Not in production
+var httpReqSchema = new Schema({
+  _id: { type: ObjectId, auto: true },
+  
+  from: String,
+  url: String,
 
   date: { type: Date, default: Date.now }
 });
