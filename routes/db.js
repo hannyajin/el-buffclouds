@@ -121,7 +121,7 @@ router.get('/', function(req, res) {
 
 /* Expose outside */
 module.exports = {
-  type: 'MongoDB',
+  type: 'Mongo',
   router: router,
   models: models
 }
