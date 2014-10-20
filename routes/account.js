@@ -4,31 +4,6 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 
-// GET login page
-router.get('/login', function(req, res) {
-  if (req.user) {
-    // already logged in
-    //res.render('login', { message: "You're already logged in as " + req.user.username });
-    return res.redirect('/');
-  } else {
-    return res.render('auth/login');
-  }
-}); 
-
-// POST login
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}));
-
-
-// GET registration page
-router.get('/register', function(req, res) {
-  res.render('auth/register');
-});
-
-
 var pendingActivationList = {};
 var pendingUsernames = [];
 
@@ -53,7 +28,40 @@ var who_was = "whowas/";
 
 var activation_timeout = 1000 * 60 * 60 * 24 * 7 * 4 * 12 * 2; // 2 years
 
-/** GET Activate account */
+
+
+/** GET login page 
+  */
+router.get('/login', function(req, res) {
+  if (req.user) {
+    // already logged in
+    //res.render('login', { message: "You're already logged in as " + req.user.username });
+    return res.redirect('/');
+  } else {
+    return res.render('auth/login');
+  }
+}); 
+
+
+/** POST login
+  */
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
+
+
+/* GET registration page
+  */
+router.get('/register', function(req, res) {
+  res.render('auth/register');
+});
+
+
+
+/** GET Activate account
+*/
 router.get('/activate/:sha', function(req, res) {
   var sha = req.params.sha;
   var obj = pendingActivationList[sha];
@@ -136,7 +144,9 @@ router.get('/activate/:sha', function(req, res) {
   }
 });
 
-/** GET Find out who sent the registration */
+
+/** GET Find out who sent the registration
+  */
 router.get('/whowas/:sha', function(req, res) {
   var sha = req.params.sha;
   var obj = pendingActivationList[sha];
@@ -155,7 +165,9 @@ router.get('/whowas/:sha', function(req, res) {
   }
 });
 
-// POST registration
+
+/** POST registration
+  */
 router.post('/register', function(req, res) {
   var json = req.body;
 
