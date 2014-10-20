@@ -29,18 +29,21 @@ var who_was = "whowas/";
 var activation_timeout = 1000 * 60 * 60 * 24 * 7 * 4 * 12 * 2; // 2 years
 
 
-
 /** GET login page 
   */
 router.get('/login', function(req, res) {
   if (req.user) {
     // already logged in
-    //res.render('login', { message: "You're already logged in as " + req.user.username });
+    res.render('auth/template', {
+      title: "Already logged in",
+      message: "You're already logged in as " + req.user.username
+    });
+
     return res.redirect('/');
   } else {
     return res.render('auth/login');
   }
-}); 
+});
 
 
 /** POST login
@@ -52,12 +55,34 @@ router.post('/login', passport.authenticate('local', {
 }));
 
 
+
 /* GET registration page
   */
 router.get('/register', function(req, res) {
-  res.render('auth/register');
+  if (req.user) {
+    // already logged in
+    res.render('auth/template', {
+      title: "Already logged in",
+      message: "You're already logged in as " + req.user.username
+    });
+
+    return res.redirect('/');
+  } else {
+    res.render('auth/register');
+  }
 });
 
+/** Logout
+  */
+router.get('/logout', function(req, res) {
+  req.logOut();
+
+  res.render('auth/template', {
+    title: "Logged out!",
+    message: "You have been logged out, your username is: "
+     + (req.user.username || "undefined (should be undefined)")
+  });
+});
 
 
 /** GET Activate account
@@ -153,12 +178,7 @@ router.get('/whowas/:sha', function(req, res) {
 
   if (obj) {
     // send information about the registartion attempt
-    res.render('auth/template', {
-      title: 'Who was',
-      p: [
-        {text: "json: " + obj}
-      ]
-    });
+    res.json(req);
     res.end();
   } else {
     res.status(404).end(); // not found

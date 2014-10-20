@@ -6,6 +6,7 @@
   </head>
   <body>
     <h1>{{ title }}</h1>
+    <p>{{ message }}</p>
     {{#p}}
     <p>{{ text }}</p>
     {{/p}}
