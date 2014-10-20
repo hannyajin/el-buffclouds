@@ -90,7 +90,7 @@ var settingsSchema = new Schema({
 });
 
 
-// Not in production
+// Not in spec
 var personalMessageSchema = new Schema({
   _id: { type: ObjectId, auto: true },
   from: { type: ObjectId, ref: 'User' },
@@ -102,7 +102,7 @@ var personalMessageSchema = new Schema({
   date: { type: Date, default: Date.now }
 });
 
-// Not in production
+// Not in spec
 var httpReqSchema = new Schema({
   _id: { type: ObjectId, auto: true },
   

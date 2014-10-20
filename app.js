@@ -25,6 +25,7 @@ var passport = require('./passport');
 // Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var accounts = require('./routes/account');
 
 /**
     Init App
@@ -43,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // cookies & session
 app.use(cookieParser('buffclouds'));
-app.use(session({ cookie: { maxAge: 60000 }, secret: 'buffclouds secret' }));
+app.use(session({ cookie: { maxAge: (1000 * 3600) }, secret: 'buffclouds secret' }));
 
 // connect-flash
 app.use(flash());
@@ -62,18 +63,10 @@ app.use(express.static(path.join(__dirname, 'public')));
     */
     
 app.use('/', routes);
+app.use('/', accounts)
 app.use('/users', users);
 app.use('/api', db.router);
 
-
-// test login
-app.post('/login', passport.authenticate('local'), function(req, res) {
-    res.send('Welcome, ' + req.user);
-});
-
-app.get('/login', function(req, res) {
-    res.render('login');
-})
 
 
 // catch 404 and forward to error handler
