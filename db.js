@@ -31,8 +31,6 @@ var userSchema = new Schema({
   clouds: [cloudSchema], // Cloud Ids
   comments: [ { type: ObjectId, ref: 'Comment'} ],
 
-  email_verified: { type: Boolean, default: false }, // if email has been verified
-
   date: { type: Date, default: Date.now }
 });
 

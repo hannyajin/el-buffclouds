@@ -30,8 +30,18 @@ router.get('/register', function(req, res) {
 
 
 var pendingActivationList = {};
-var sha1 = require('sha1');
+var pendingUsernames = [];
 
+function isUsernameFree(username) {
+  for (var i = 0; i < pendingUsernames.length; i++) {
+    if (pendingUsernames[i] === username) {
+      return false;
+    }
+  }
+  return true;
+};
+
+var sha1 = require('sha1');
 var emailbot = require('../emailbot');
 
 var db = require('../db');
@@ -41,7 +51,7 @@ var base_url = "http://localhost:3000/"
 var verify_url = "activate/";
 var who_was = "whowas/";
 
-var activation_timeout = 1000 * 60 * 60; // 1 hour
+var activation_timeout = 1000 * 60 * 60 * 24 * 7 * 4 * 12 * 2; // 2 years
 
 /** GET Activate account */
 router.get('/activate/:sha', function(req, res) {
@@ -50,20 +60,73 @@ router.get('/activate/:sha', function(req, res) {
 
   if (obj) {
     if (Date.now() < (obj.date + activation_timeout || (1000*60*60)) ) {
-      res.render('auth/template', {
-        title: 'Account Activated!',
-        p: [
-          { text: 'Hi ' + (obj.req.body.username || 'Unkown') +
-                "! You've successfully activated your account!" }
-        ]
+      // Accept the verification, create User object
+      var json = obj.req.body; // get the registration credentials
+
+      // Make sure the user doesn't exist yet
+      models.User.findOne({ username: json.username }, function (err, user) {
+        if (err) {
+          console.log('Activation error: ' + err);
+          return res.status(500).end();
+        }
+
+        if (!user) { // username available
+          models.User.findOne({ email: json.email }, function (err, email) {
+            if (err) {
+              console.log('Activation error: ' + err);
+              return res.status(500).end();
+            }
+
+            if (!email) { // email available
+              // clean the username from pending list (no longer needed)
+              pendingUsernames.splice(pendingUsernames.indexOf(json.username), 1);
+
+              // Create the actual data base object
+              var user = new models.User({
+                email: json.email,
+                username: json.username,
+                password: sha1(json.password || ""), // don't store in plain text
+
+                date: Date.now() // date of creation
+              });
+
+              // save the object into the database
+              user.save(function (err, user) {
+                if (err) {
+                  console.log("Error in saving new user to Database: " + err);
+                  return res.status(500).end();
+                }
+
+                // send confirmation to the user
+                res.render('auth/template', {
+                  title: 'Account Activated!',
+                  p: [
+                    { text: 'Hi ' + (obj.req.body.username || 'Unknown') +
+                          "! You've successfully activated your account!" }
+                  ]
+                });
+                res.end();
+
+              }); // user.save(...)
+
+            } else {
+              // email taken
+              return res.json({ type: 'error', message: "That email has already been registered." });
+            }
+          });
+        } else {
+          // username taken
+          return res.json({ type: 'error', message: "That name isn't available." });
+        }
       });
-      res.end();
+
+
     } else {
       res.render('auth/template', {
         title: 'Activation Time Expired!',
         p: [
-          { text: 'Hi ' + (obj.req.body.username || 'Unkown') +
-                "! The time to register your email has run out. Please try again." }
+          { text: 'Hi ' + (obj.req.body.username || 'Unknown') +
+                "! Your registration timeout has expired. Please try again." }
         ]
       });
       res.end();
@@ -104,7 +167,7 @@ router.post('/register', function(req, res) {
       console.log('Registration error: ' + err);
       return res.status(500).end();
     }
-    if (!user) { // username available
+    if (!user && isUsernameFree( json.username )) { // username available
       models.User.findOne({ email: json.email }, function (err, email) {
         if (err) {
           console.log('Registration error: ' + err);
@@ -114,6 +177,7 @@ router.post('/register', function(req, res) {
 
           /**  Create a new temporary user awaiting email verification.
             */
+          pendingUsernames.push( json.username ); // pre-order the username
           var sha = sha1(json.username + Date.now() + "buffclouds"); // create sha out of request object
 
           // save the full request temporarily 
@@ -138,9 +202,8 @@ router.post('/register', function(req, res) {
             }
 
             var mail = {
-              to: 'talmo.christian@gmail.com',
-              html: html,
-              text: html
+              to: json.email,
+              html: html
             }
 
             emailbot.sendMail(mail, function(err, info) {
