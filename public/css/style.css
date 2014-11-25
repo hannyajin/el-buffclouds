@@ -101,7 +101,7 @@ footer .iconWrapper i {
   padding: 5px;
 }
 .cover-image {
-  background: url('../img/bg2.jpg') no-repeat 0 0;
+  background: url('../img/bg2.jpg');
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -109,6 +109,7 @@ footer .iconWrapper i {
   -moz-background-size: cover !important;
   -o-background-size: cover !important;
   background-size: cover !important;
+  background-position: center top;
   z-index: -1;
 }
 .black-overlay {
