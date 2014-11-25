@@ -25,18 +25,18 @@
   -o-transform:      rotate(@deg);
 }
 .background-size (@string) {
-  -webkit-background-size: @string !important;
-  -moz-background-size: @string !important;
-  -o-background-size: @string !important;
-  background-size: @string !important;
+  -webkit-background-size: @string;
+  -moz-background-size: @string;
+  -o-background-size: @string;
+  background-size: @string;
 }
 
 
 
 
 html, body {
-  //min-height: 400px;
   min-width: 500px;
+  min-height: 400px;
 }
 
 body {
@@ -158,11 +158,13 @@ footer {
 }
 
 .cover-image {
-  background: url('../img/bg2.jpg');
-  overflow: hidden;
-  .background-size(cover);
+  background-image: url('../img/bg2.jpg');
   background-position: center top;
+  background-repeat: no-repeat;
+  display: block;
+  .background-size(cover);
   z-index: -1;
+  overflow: hidden;
 }
 
 .black-overlay {
