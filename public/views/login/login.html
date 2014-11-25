@@ -1,0 +1,52 @@
+<div class="page page-login">
+  <div class="page-content">
+
+    <section id="login">
+    <div class="container">
+      <div class="row">
+          <div class="col-xs-12">
+              <div class="form-wrap">
+                <h1>Log in with your email</h1>
+                    <form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off" ng-submit="login();">
+                        <div class="form-group">
+                            <label for="email" class="sr-only">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="key" class="sr-only">Password</label>
+                            <input type="password" name="key" id="key" class="form-control" placeholder="Password">
+                        </div>
+                        <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Log in">
+                    </form>
+                    <a href="javascript:;" ng-click="forgot();" class="fake-link forget">Forgot your password?</a>
+                    <hr>
+
+                    <div id="forget-modal" class="forget-modal">
+                      <div class="black-overlay">
+                      </div>
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" ng-click="close();">
+                              <span aria-hidden="true">×</span>
+                              <span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title">Password recovery</h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>Type your email address</p>
+                            <input type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off">
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" ng-click="cancel();">Cancel</button>
+                            <button type="button" class="btn btn-custom" ng-click="recovery();">Recovery</button>
+                          </div>
+                        </div> <!-- /.modal-content -->
+                    </div> <!-- /.modal -->
+          </div>
+        </div> <!-- /.col-xs-12 -->
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    </section>
+
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buffclouds</title>
+  <!-- meta -->
+  <meta name="description" content="">
+  <meta name="Keywords" content="Links" >
+
+  <!-- other meta -->
+  <meta name="author" content="jin.fi" >
+  <meta name="owner" content="" >
+  <meta name="copyright" content="jin.fi" >
+  <meta name="rating" content="general" >
+  <meta name="robots" content="index, follow" >
+
+
+  <meta name="classification" content="">
+
+  <!-- Bootstrap and Font-Awesome -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="css/vendor/bootstrap-social.css">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- main css -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- angular animations -->
+  <link rel="stylesheet" href="css/animations.css">
+  <!-- animate.css -->
+  <link rel="stylesheet" href="css/vendor/animate.css">
+
+
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+
+<body class="cover-image" ng-controller="MainCtrl">
+  <div class="mainWrapper ng-cloak" ng-cloak>
+    <header ng-include="'views/_partial/header/header.html'" class="section-image"></header>
+
+    <div ng-hide="{{!alert}}" class="alert alert-{{alert.type}} animated main-alert" ng-class="{'fadeInRight': alert.show, 'fadeOutLeft': !alert.show, 'alert-hidden': !alert.hasBeenShown}"><strong>{{alert.title}}</strong> {{alert.message || 'Alert Default Message'}}</div>
+
+    <div class="view-wrap">
+      <div class="view-container">
+        <div ng-view class="view-frame">
+        </div>
+      </div>
+    </div>
+
+    <footer ng-include="'views/_partial/footer/footer.html'" class="section-image"></footer>
+    <!--<footer ng-include="'views/_partial/footer/footer.html'" class="section-image"></footer>-->
+  </div>
+
+
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+
+  <!-- scripts -->
+  <script src="js/vendor/angular.js"></script>
+  <script src="js/vendor/angular-route.js"></script>
+  <script src="js/vendor/angular-animate.js"></script>
+  <!-- <script src="scripts/vendor/jquery-1.10.2.min.js"></script> -->
+  <script src="js/vendor/jquery-1.10.2.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/filters.js"></script>
+  <!-- views -->
+  <script src="views/home/home.js"></script>
+  <script src="views/login/login.js"></script>
+
+  <!-- partial views -->
+  <script src="views/_partial/header/header.js"></script>
+  <script src="views/_partial/footer/footer.js"></script>
+
+
+  <!-- preload images
+  <div id="preload">
+    <img src="" width="1" height="1" alt="main-bg">
+  </div> -->
+
+</body>
+</html>

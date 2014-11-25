@@ -6,13 +6,18 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     addsrc = require('gulp-add-src'),
     changed = require('gulp-changed'),
-    mincss = require('gulp-minify-css');
+    mincss = require('gulp-minify-css'),
+    watch = require('gulp-watch'),
+    livereload = require('gulp-livereload'),
+    plumber = require('gulp-plumber');
 
 gulp.task('less', function(cb) {
   try {
   gulp.src('./public/css/*.less')
+      .pipe(plumber())
       .pipe(less())
-      .pipe(gulp.dest('./public/css'));
+      .pipe(gulp.dest('./public/css'))
+      .pipe(livereload());
 
   } catch (err) {
     cb(err);
@@ -62,3 +67,10 @@ gulp.task('images', function() {
           .pipe(gulp.dest(dst));
 });
 
+// watch
+gulp.task('watch', function() {
+  gulp.watch('public/css/*.less', ['less']);
+});
+
+//default
+gulp.task('default', ['watch']);

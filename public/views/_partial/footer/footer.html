@@ -1,0 +1,28 @@
+<div ng-controller="footerCtrl">
+  <footer>
+    <div class="wrapper">
+
+      <div class="linkWrapper col-12">
+        <ul>
+          <li ng-repeat="link in footer.links">
+            <a ng-href="{{ link.href }}">{{ link.text }}</a>
+            <span ng-if="!$last">|</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="iconWrapper col-12">
+        <a href="">
+          <i class="fa fa-2x fa-facebook"></i>
+        </a>
+        <a href="">
+          <i class="fa fa-2x fa-twitter"></i>
+        </a>
+        <a href="">
+          <i class="fa fa-2x fa-pinterest"></i>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+</div>

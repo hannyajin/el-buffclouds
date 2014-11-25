@@ -1,10 +1,10 @@
 /** Configure the database and its dependencies
-  */
+----------------------*/
 
 var express = require('express');
-var router = express.Router();
 
-/* Connect to Mongo DataBase */
+/* Connect to Mongo DataBase
+----------------------*/
 var mongoose = require('mongoose');
 var mongouri = require('./private/auth.json').mongo.uri;  // secret from private file
 
@@ -18,7 +18,7 @@ db.once('open', function db_open() {
 
 
 /** Configure Schemas
-  */
+----------------------*/
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 
@@ -111,29 +111,17 @@ var httpReqSchema = new Schema({
 });
 
 /** Initialize Models
-  */
+----------------------*/
 var models = {
-  User: db.model('User', userSchema),
-  Cloud: db.model('Cloud', cloudSchema),
-  Link: db.model('Link', linkSchema),
-  Comment: db.model('Comment', commentSchema)
-}
-
-
-/** REST API
-  */
-
-/* GET users listing. */
-router.get('/', function(req, res) {
-  console.log('in api get');
-  res.send('user: ' + req.user);
-});
-
+  'User': db.model('User', userSchema),
+  'Cloud': db.model('Cloud', cloudSchema),
+  'Link': db.model('Link', linkSchema),
+  'Comment': db.model('Comment', commentSchema)
+};
 
 /* Expose outside */
 module.exports = {
   type: 'Mongo',
-  router: router,
   models: models,
   connection: db 
 }

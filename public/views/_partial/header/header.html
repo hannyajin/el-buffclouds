@@ -1,0 +1,44 @@
+<div ng-controller="headerCtrl" class="container"> <!-- pure-g -->
+  
+  <div class="row">
+    <div class="col-xs-12">
+
+      <div id="logo">
+        <a href="#/home" class="logo" title="Go to homepage">
+          <span>Buffclouds</span>
+        </a>
+      </div>
+      <!-- navigation -->
+      <div id="navigation">
+        <nav role="navigation">
+          <ul>
+            <li ng-repeat="link in nav.links">
+              <a ng-href="{{ link.href }}">{{ link.text }}</a>
+            </li>
+          </ul>
+        </nav>
+
+      <div id="authWrapper">
+        <!-- show if authenticated -->
+        <div ng-hide="!at.isAuthenticated()">
+
+        </div>
+
+        <!-- show if NOT authenticated -->
+        <div ng-hide="at.isAuthenticated()">
+          <!-- Login / Register buttons -->
+          <a href="#/login">
+            <button type="button" class="btn btn-primary">Login</button>
+          </a>
+          <a href="#/register">
+            <button type="button" class="btn btn-primary">Sign up</button>
+          </a>
+        </div>
+      </div>
+
+
+      </div>
+
+    </div> <!-- col-xs-12 -->
+  </div>
+</div>
