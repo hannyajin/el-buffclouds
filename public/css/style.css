@@ -2,7 +2,6 @@
 ---------------------*/
 html,
 body {
-  min-height: 400px;
   min-width: 500px;
 }
 body {
@@ -103,8 +102,6 @@ footer .iconWrapper i {
 .cover-image {
   background: url('../img/bg2.jpg');
   overflow: hidden;
-  width: 100%;
-  height: 100%;
   -webkit-background-size: cover !important;
   -moz-background-size: cover !important;
   -o-background-size: cover !important;
