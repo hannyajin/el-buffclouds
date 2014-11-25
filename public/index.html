@@ -42,8 +42,8 @@
   <link rel="icon" type="image/png" href="img/favicon.png">
 </head>
 
-<body class="cover-image" ng-controller="MainCtrl">
-  <div class="mainWrapper ng-cloak" ng-cloak>
+<body class="" ng-controller="MainCtrl">
+  <div class="mainWrapper ng-cloak cover-image" ng-cloak>
     <header ng-include="'views/_partial/header/header.html'" class="section-image"></header>
 
     <div ng-hide="{{!alert}}" class="alert alert-{{alert.type}} animated main-alert" ng-class="{'fadeInRight': alert.show, 'fadeOutLeft': !alert.show, 'alert-hidden': !alert.hasBeenShown}"><strong>{{alert.title}}</strong> {{alert.message || 'Alert Default Message'}}</div>
