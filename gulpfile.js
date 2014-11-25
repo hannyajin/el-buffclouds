@@ -16,6 +16,21 @@ gulp.task('less', function(cb) {
   gulp.src('./public/css/*.less')
       .pipe(plumber())
       .pipe(less())
+      .pipe(gulp.dest('./public/css'));
+
+  } catch (err) {
+    cb(err);
+    return;
+  }
+
+  cb();
+});
+
+gulp.task('lessReload', function(cb) {
+  try {
+  gulp.src('./public/css/*.less')
+      .pipe(plumber())
+      .pipe(less())
       .pipe(gulp.dest('./public/css'))
       .pipe(livereload());
 
@@ -69,7 +84,7 @@ gulp.task('images', function() {
 
 // watch
 gulp.task('watch', function() {
-  gulp.watch('public/css/*.less', ['less']);
+  gulp.watch('public/css/*.less', ['lessReload']);
 });
 
 //default
